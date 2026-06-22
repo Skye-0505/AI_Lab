@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ArticleCard } from '@/components/ArticleCard';
+
+const reviews = (await getCollection('reviews', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+);
+---
+
+<BaseLayout title="访谈复盘" description="把高质量访谈与播客转译成个人定位视角的结构化复盘。">
+  <section class="border-b border-border/60 bg-muted/20">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+      <h1 class="font-serif text-3xl font-semibold tracking-tight sm:text-4xl">访谈 / 播客复盘</h1>
+      <p class="mt-4 max-w-2xl text-muted-foreground leading-relaxed">
+        不做简单摘录。每篇复盘回答：揭示了什么变化、有什么启发、值得保留什么、能转化成什么行动。
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    {
+      reviews.length === 0 ? (
+        <p class="rounded-xl border border-dashed border-border bg-muted/30 px-6 py-12 text-center text-muted-foreground">
+          内容筹备中，敬请期待。
+        </p>
+      ) : (
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {reviews.map((review) => (
+            <ArticleCard
+              href={`/reviews/${review.id}`}
+              title={review.data.title}
+              description={review.data.description}
+              date={review.data.publishedAt}
+              tags={review.data.tags}
+              meta={review.data.source}
+              type="review"
+            />
+          ))}
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>

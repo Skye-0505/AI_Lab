@@ -1,0 +1,37 @@
+---
+interface LinkItem {
+  href: string;
+  title: string;
+  description: string;
+  type: 'note' | 'review';
+}
+
+interface Props {
+  items: LinkItem[];
+  heading?: string;
+}
+
+const { items, heading = '相关内容' } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <aside class="mt-12 border-t border-border/60 pt-8">
+      <h2 class="mb-4 font-serif text-lg font-semibold">{heading}</h2>
+      <ul class="space-y-3">
+        {items.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="group block rounded-lg border border-border/70 bg-muted/20 p-4 transition-colors hover:border-primary/30 hover:bg-primary/[0.03]"
+            >
+              <p class="text-xs text-primary">{item.type === 'note' ? '研究笔记' : '访谈复盘'}</p>
+              <p class="mt-1 font-medium group-hover:text-primary transition-colors">{item.title}</p>
+              <p class="mt-1 text-sm text-muted-foreground line-clamp-2">{item.description}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </aside>
+  )
+}

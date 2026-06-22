@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+/* 低饱和度绿色主题 */
+:root {
+  --background: 150 28% 97%;
+  --foreground: 160 12% 20%;
+  --card: 150 22% 99%;
+  --card-foreground: 160 12% 20%;
+  --popover: 150 22% 99%;
+  --popover-foreground: 160 12% 20%;
+  --primary: 152 20% 36%;
+  --primary-foreground: 150 25% 98%;
+  --secondary: 150 16% 92%;
+  --secondary-foreground: 160 12% 28%;
+  --muted: 150 14% 93%;
+  --muted-foreground: 160 8% 46%;
+  --accent: 152 18% 88%;
+  --accent-foreground: 160 12% 24%;
+  --destructive: 0 45% 55%;
+  --border: 150 12% 87%;
+  --input: 150 12% 87%;
+  --ring: 152 20% 36%;
+  --radius: 0.625rem;
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Noto Serif SC", "Source Han Serif SC", ui-serif, Georgia, serif;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif tracking-tight text-foreground;
+  }
+}
+
+/* 文章排版 */
+.prose {
+  @apply max-w-none text-foreground/90 leading-relaxed;
+
+  h2 {
+    @apply mt-10 mb-4 text-xl font-semibold;
+  }
+
+  h3 {
+    @apply mt-8 mb-3 text-lg font-medium;
+  }
+
+  p {
+    @apply mb-4;
+  }
+
+  ul,
+  ol {
+    @apply mb-4 ml-6 space-y-2;
+  }
+
+  ul {
+    @apply list-disc;
+  }
+
+  ol {
+    @apply list-decimal;
+  }
+
+  li {
+    @apply text-foreground/85;
+  }
+
+  blockquote {
+    @apply my-6 border-l-4 border-primary/30 pl-4 italic text-muted-foreground;
+  }
+
+  a {
+    @apply text-primary underline-offset-4 hover:underline;
+  }
+
+  strong {
+    @apply font-semibold text-foreground;
+  }
+
+  hr {
+    @apply my-8 border-border;
+  }
+}

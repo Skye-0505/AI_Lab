@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ArticleCard } from '@/components/ArticleCard';
+
+const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+);
+---
+
+<BaseLayout title="研究笔记" description="分析 AI 时代知识工作、技能价值与社会结构变化的研究笔记。">
+  <section class="border-b border-border/60 bg-muted/20">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+      <h1 class="font-serif text-3xl font-semibold tracking-tight sm:text-4xl">研究笔记</h1>
+      <p class="mt-4 max-w-2xl text-muted-foreground leading-relaxed">
+        不追热点，不做情绪化断言。每篇尽量沉淀一个概念、判断或框架，帮助你看清外部变化。
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    {
+      notes.length === 0 ? (
+        <p class="rounded-xl border border-dashed border-border bg-muted/30 px-6 py-12 text-center text-muted-foreground">
+          内容筹备中，敬请期待。
+        </p>
+      ) : (
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {notes.map((note) => (
+            <ArticleCard
+              href={`/notes/${note.id}`}
+              title={note.data.title}
+              description={note.data.description}
+              date={note.data.publishedAt}
+              tags={note.data.tags}
+              type="note"
+            />
+          ))}
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>
